@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% for seasonald in seasonalds %}
+    <div class="col px-md-5"><div class="p-3 border bg-light">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{seasonald.seasonald_title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Seasonal Discount ID: {{seasonald.id}}</h6>
+                        <p class="card-text">Seasonal Discount Offer %: {{seasonald.seasonald_offer}}</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+{% endblock %}

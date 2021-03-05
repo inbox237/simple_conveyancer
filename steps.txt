@@ -1,0 +1,92 @@
+AWS- UBUNTU 20
+
+Go to AWS
+
+EC2 - press Launch Instance - then select ubuntu 20.04 - t2.micro
+add tags - name - Simple Conveyancer_ then add ending either ec2 or DB, first one will be DB
+add rule - Custom TCP - port range 5432 - 0.0.0.0/0
+create PEM called vpc and download, move this to ~/.ssh/
+cd to ~/.ssh/
+sudo chmod 600 vpc.pem
+
+ssh into EC2 (for database):
+Find public ip address on AWS - in my case this was 13.211.86.126
+ssh -i ~/.ssh/vpc.pem ubuntu@13.211.86.126
+sudo apt update
+
+
+Install Postgresql:
+sudo apt-get install postgresql -y
+sudo -u postgres psql
+SHOW config_file;
+> copy the path that shows - mine was /etc/postgresql/12/main/postgresql.conf
+> now exit postgresql - 'quit'
+sudo vim /etc/postgresql/12/main/postgresql.conf
+Go down the page until you find:
+#listen_addresses = 'localhost'
+Uncomment the line and change the above to
+listen_addresses = '*'
+> scroll down to find the hba_file location and copy this to clipboard
+> then press esc, then type :wq to write and quit the file
+
+sudo vim /etc/postgresql/12/main/pg_hba.conf
+> scroll down to find IPv4 settings, create new line after # TYPE DATABASE - host all all 0.0.0.0/0 md5
+> then press esc, then type :wq to write and quit the file
+
+> to check if its running, enter: sudo systemctl status postgresql
+> then enter: sudo systemctl restart postgresql
+
+sudo -u postgres psql
+ALTER ROLE postgres WITH PASSWORD 'coder';
+CREATE DATABASE simple_conveyancer;
+
+
+>Go to new terminal:
+psql --host=13.211.86.126 --port=5432 --username=postgres --dbname=simple_conveyancer --password
+
+
+>Go to installation folder
+git clone "ADDRESS of my git"
+
+cd t3a3
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+export FLASK_APP=main.py
+export FLASK_ENV=development
+flask run
+
+open new wsl terminal
+source ./venv/bin/activate
+pip install python-dotenv
+
+
+
+
+
+STEPS TEST for CLIENT
+Clone stuff...
+
+cd t3a3
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+export FLASK_APP=main.py
+export FLASK_ENV=development
+export DB_URI=postgresql+psycopg2://postgres:coder@54.252.156.13:5432/spotify_api
+flask run
+
+
+SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://postgres:coder@54.252.156.13:5432/spotify_api"
+
+export DB_URI=postgresql+psycopg2://postgres:coder@54.252.156.13:5432/spotify_api
+
+
+
+
+
+
+
+
