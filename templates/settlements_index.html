@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content%} 
+<h2>Settlements</h2>          
+    {% for settlement in settlements %}
+        <h3>{{settlement.id}}</h3>
+        <h4>test</h4>
+        <a href="{{ url_for('settlements.settlement_show', id=settlement.id) }}">More details</a>
+        <br>
+    {% endfor %}
+{% endblock %}

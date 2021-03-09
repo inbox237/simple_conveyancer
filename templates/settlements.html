@@ -1,17 +1,15 @@
 {% extends "layout.html" %}
 
-{% block content %}
-    {% for settlement in settlements %}
-    <div class="col px-md-5"><div class="p-3 border bg-light">
-                <div class="card" >
-                    <div class="card-body">
-                        <h5 class="card-title">{{settlement.settlement_title}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Playlist ID: {{settlement.id}}</h6>
-                        <p class="card-text">Playlist's Track Count: {{settlement.settlement_s_tracks_count}}</p>
-                        <p class="card-text">Playlist's User Count: {{settlement.settlement_s_users_count}}</p>
-                    </div>
-                </div>
-            </div>
-    </div>
-    {% endfor %}
+{% block content%}        
+    <h3>test</h3>
+    <h4>test</h4>
+    <h4>test</h4>
+    <h4>test</h4>
+    <h4>test</h4>
+    {% if current_user.is_authenticated and current_user.id == sett.user.id %}
+        <a href="{{ url_for('animals.new_animal') }}"><button>Add a new animal</button></a>
+        <a href="{{ url_for('shelters.modify_shelter', id=sett.id) }}"><button>Update shelter</button></a>
+        <a href="{{ url_for('shelters.shelter_delete', id=sett.id) }}"><button>Delete shelter</button></a>
+    {% endif%}
+    <a href="/shelters">Back</a>
 {% endblock %}

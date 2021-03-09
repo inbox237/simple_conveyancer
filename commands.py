@@ -67,6 +67,7 @@ def seed_db():
         settlement.settlement_title = faker.unique.catch_phrase()
 
         user.email = f"test{i}@test.com"
+        user.username = f"testusername{i}"
         user.password = bcrypt.generate_password_hash("123456").decode("utf-8")
         user.seasonal_offer = faker.random_int(min=1, max=4)
     
@@ -110,7 +111,7 @@ def refresh_db(ctx):
     create_db.invoke(ctx)
     seed_db.invoke(ctx)
     print("All Done!, Flask program will now start....")
-    webbrowser.open("http://127.0.0.1:5000/settlements/")
+    webbrowser.open("http://127.0.0.1:5000/signup")
     os.system("flask run")
 
 

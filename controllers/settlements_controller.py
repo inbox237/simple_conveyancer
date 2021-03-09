@@ -17,7 +17,7 @@ settlements = Blueprint('settlements', __name__, url_prefix="/settlements")
 def settlement_index():
     #Retrieve all settlements
     settlements = Settlement.query.all()
-    return render_template("settlements.html", settlements=settlements)
+    return render_template("settlements_index.html", settlements=settlements)
 
 
 @settlements.route("/", methods=["POST"])
@@ -47,7 +47,8 @@ def settlement_create():
 def settlement_show(id):
     #Return a single settlement
     settlement = Settlement.query.get(id)
-    return jsonify(settlement_schema.dump(settlement))
+    #return jsonify(settlement_schema.dump(settlement))
+    return render_template("settlements.html", sett = settlement )
 
 @settlements.route("/<int:id>", methods=["PUT", "PATCH"])
 @jwt_required
