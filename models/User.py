@@ -1,5 +1,4 @@
 from main import db
-from models.User_Settlement_Association import user_settlement_association_table as upat
 from models.Settlement import Settlement
 from flask_login import UserMixin
 
@@ -15,9 +14,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(), nullable=True, unique=True)
     password = db.Column(db.String(), nullable=False)
     user_s_settlements_count = db.Column(db.Integer())
-    user_s_settlements = db.relationship("Settlement", secondary=upat,
-                        back_populates="settlement_s_users")
-
+    user_s_settlements = db.relationship("Settlement", backref="user")
 
     def __repr__(self):
         return f"<User {self.email}>"

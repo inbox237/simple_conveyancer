@@ -1,7 +1,6 @@
 from models.User import User
 from models.Settlement import Settlement
 
-from models.User_Settlement_Association import user_settlement_association_table as upat
 
 from schemas.UserSchema import user_schema, users_schema
 from schemas.SettlementSchema import settlement_schema, settlements_schema
@@ -43,7 +42,7 @@ def settlement_create():
     return jsonify(settlement_schema.dump(new_settlement))
 
 @settlements.route("/<int:id>", methods=["GET"])
-@jwt_required
+#@jwt_required
 def settlement_show(id):
     #Return a single settlement
     settlement = Settlement.query.get(id)
@@ -51,7 +50,7 @@ def settlement_show(id):
     return render_template("settlements.html", sett = settlement )
 
 @settlements.route("/<int:id>", methods=["PUT", "PATCH"])
-@jwt_required
+#@jwt_required
 def settlement_update(id):
     #Update a settlement
     settlement_fields = settlement_schema.load(request.json)

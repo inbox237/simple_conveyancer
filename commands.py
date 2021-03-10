@@ -23,8 +23,7 @@ def seed_db():
     from models.User import User
     from models.Settlement import Settlement
    
-    from models.User_Settlement_Association import user_settlement_association_table as upat
-    
+   
     from main import bcrypt
     from faker import Faker
     import random
@@ -97,9 +96,6 @@ def seed_db():
         db.session.commit()
 
 
-    #create association tables
-    db.session.execute(upat.insert().values(usr_pla_association_pairs))
-    db.session.commit()
 
     print("Tables seeded")
 
