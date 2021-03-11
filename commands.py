@@ -39,36 +39,13 @@ def seed_db():
     count_usr_pla = [0]*10
 
 
-
-#Association Lists SETUP + Counts
-    for i in range(1,11):
-
-        usr_int = random.randint(1,10)
-        pla_int = random.randint(1,10)
-       
-        #Append Association List - Users and Settlements - don't enter duplicates
-        while (usr_int,pla_int) in usr_pla_association_pairs:
-            usr_int = random.randint(1,10)
-            pla_int = random.randint(1,10)
-
-        #Add count both directions
-        count_usr_pla[usr_int-1]+=1
-        count_pla_usr[pla_int-1]+=1
-
-        usr_pla_association_pairs.append((usr_int,pla_int))
-
-
     #Users/Settlements
     for i in range(1,11):
         user = User()
         settlement = Settlement()
-
-        settlement.settlement_title = faker.unique.catch_phrase()
-
-        user.email = f"test{i}@test.com"
         user.username = f"testusername{i}"
         user.password = bcrypt.generate_password_hash("123456").decode("utf-8")
-        user.seasonal_offer = faker.random_int(min=1, max=4)
+
     
         db.session.add(user)
         db.session.add(settlement)

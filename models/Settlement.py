@@ -8,9 +8,22 @@ class Settlement(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     settlement_title = db.Column(db.String())
-    settlement_s_tracks_count = db.Column(db.Integer())
-    settlement_s_users_count = db.Column(db.Integer())
-    settlement_s_users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    #settlement_s_tracks_count = db.Column(db.Integer())
+    #settlement_s_users_count = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+
+    name = db.Column(db.String())
+    settdate = db.Column(db.String())
+    address = db.Column(db.String())
+    saleprice = db.Column(db.String())
+    deposit = db.Column(db.String())
+    ratesamount = db.Column(db.String())
+    ratesstatus = db.Column(db.String())
+    
+    balance = db.Column(db.Float())
+    ratesdayspaid = db.Column(db.Integer())
+    ratesoverpaid = db.Column(db.Float())
+    totalbalance = db.Column(db.Float())
 
     
     def __repr__(self):

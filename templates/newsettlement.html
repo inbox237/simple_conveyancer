@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+.row {
+  white-space: nowrap;
+  padding: 10px;
+  width: 500px;
+  margin: 20;
+  justify-content: space-between;
+}
+</style>
+
+    <div>
+        <h3>Create New Settlement - BCC Rates Calculator</h3>
+        <div>
+            <form action="{{ url_for('settlements.settlement_create') }}" method="POST">
+                <div class="row">
+                    <h5>Client Name</h5><input type="text" name="name" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>Settlement Date</h5><input type="date" name="settdate" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>Property Address</h5><input type="text" name="address" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>Sale Price</h5><input type="text" name="saleprice" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>Deposit</h5><input type="text" name="deposit" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>BCC Rates Amount</h5><input type="text" name="ratesamount" placeholder="" autofocus="">
+                </div>
+
+                <div class="row">
+                    <h5>Rates Paid y/n?</h5><input type="checkbox" name="ratesstatus" placeholder="" autofocus="">
+                </div>
+
+                <button>Submit Data</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

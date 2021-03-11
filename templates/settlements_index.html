@@ -1,11 +1,27 @@
 {% extends "layout.html" %}
 
 {% block content%} 
-<h2>Settlements</h2>          
+<style>
+.row {
+  white-space: nowrap;
+  padding: 10px;
+  width: 500px;
+  margin: 20;
+  justify-content: space-between;
+}
+</style>
+
+
+<h3>My Settlements</h3>          
     {% for settlement in settlements %}
-        <h3>{{settlement.id}}</h3>
-        <h4>test</h4>
-        <a href="{{ url_for('settlements.settlement_show', id=settlement.id) }}">More details</a>
-        <br>
+        {% if current_user.is_authenticated and current_user.id == settlement.user_id %}
+            
+            <h5>Settlement ID: {{settlement.id}}</h5>
+            <h5>Client Name: {{settlement.name}}</h5>
+            <h5>Settlement Date: {{settlement.settdate}}</h5>
+            <a href="{{ url_for('settlements.settlement_show', id=settlement.id) }}">Show Settlement Calculations</a>
+            <h5>____</h5>
+        {% endif%}
+
     {% endfor %}
 {% endblock %}
