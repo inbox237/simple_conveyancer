@@ -22,7 +22,10 @@ class Settlement(db.Model):
     
     balance = db.Column(db.Float())
     ratesdayspaid = db.Column(db.Integer())
+    ratesdaysunpaid = db.Column(db.Integer())
     ratesoverpaid = db.Column(db.Float())
+    ratesunderpaid = db.Column(db.Float())
+
     totalbalance = db.Column(db.Float())
 
     

@@ -10,6 +10,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.orm import joinedload
 from flask_login import login_required, current_user
 
+import sys
+import datetime
+
 settlements = Blueprint('settlements', __name__, url_prefix="/settlements")
 
 @settlements.route("/newsettlement", methods=["GET"])
@@ -28,17 +31,24 @@ def settlement_index():
 @settlements.route("/", methods=["POST"])
 @login_required
 def settlement_create():
+    
     # Create a new settlement
     name = request.form.get("name")
-    settdate = request.form.get("settdate")
+
+    settdate = datetime.datetime.date(datetime.datetime.strptime(request.form.get("settdate"),'%Y-%m-%d'))
+
     address = request.form.get("address")
 
-    saleprice = request.form.get("saleprice")
-    deposit = request.form.get("deposit")
-    ratesamount = request.form.get("ratesamount")
+    saleprice = float(request.form.get("saleprice"))
+    deposit = float(request.form.get("deposit"))
+    ratesamount = float(request.form.get("ratesamount"))
     ratesstatus = request.form.get("ratesstatus")
 
+    
+
     #create a new Settlement object, with the data received in the request
+
+    
     new_settlement = Settlement()
     new_settlement.name = name
     new_settlement.settdate = settdate
@@ -51,11 +61,49 @@ def settlement_create():
     new_settlement.ratesamount = ratesamount
     new_settlement.ratesstatus = ratesstatus
 
-    #calculation-based fields
-    new_settlement.balance = saleprice
-    new_settlement.ratesdayspaid = saleprice
+    #calculations for fields
+    balance = float((request.form.get("saleprice")))-float((request.form.get("deposit")))
+    
+    startrates = datetime.date(2020,7,1)
+    endrates = datetime.date(2021,6,30)
+    ratesdaystotal = endrates-startrates
+
+    #sd = datetime.date(datetime.datetime.strptime(settdate, '%Y,%m,%d'))
+    
+    ratesdayspaid = endrates-settdate
+    ratesdaysunpaid = settdate-startrates
+
+    rdp = ratesdayspaid.days
+    rdu = ratesdaysunpaid.days
+
+    ratespaidfloat = float(ratesdayspaid.days)
+    ratesdaystotalfloat = float(ratesdaystotal.days)
+
+    ratesoverpaidrate = (ratespaidfloat / ratesdaystotalfloat)
+    ratesoverpaid = (ratesoverpaidrate * ratesamount)
+
+    totalbalance = (balance+ratesoverpaid)
+
+    ratesunderpaidrate = (ratesdaysunpaid.days / ratesdaystotal.days)
+    ratesunderpaid = (ratesunderpaidrate * ratesamount)
+
+    totalbalanceunpaid = (balance - ratesunderpaid)
+    
+
+
+    #Calculated fields from above
     new_settlement.ratesoverpaid = saleprice
+    new_settlement.ratesunderpaid = ratesunderpaid
+
+    new_settlement.balance = balance
+
+    new_settlement.ratesdayspaid = rdp
+    new_settlement.ratesdaysunderpaid = rdu
+
     new_settlement.totalbalance = saleprice
+
+
+
 
 
     #add a new Settlement to the db
