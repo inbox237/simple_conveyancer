@@ -44,7 +44,6 @@ CREATE DATABASE simple_conveyancer;
 >Go to new terminal:
 psql --host=13.211.86.126 --port=5432 --username=postgres --dbname=simple_conveyancer --password
 
-
 >Go to installation folder
 git clone "ADDRESS of my git"
 
@@ -65,8 +64,14 @@ pip install python-dotenv
 
 
 
+
+
 STEPS TEST for CLIENT
 Clone stuff...
+
+ssh -i ~/.ssh/vpc.pem ubuntu@3.106.129.206
+
+git clone https://github.com/inbox237/Simple_Conveyancer
 
 cd t3a3
 python3 -m venv venv
