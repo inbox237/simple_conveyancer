@@ -12,7 +12,7 @@ The GitHub repository for this can be found here: https://github.com/inbox237/Si
 
 This application will be hosted live at http://3.106.129.206:5000/ , but in the event that this isn't the case, please follow the instructions below:
 
-![erd](/docs/New_settlement.png)
+![erd](/docs/New_Settlement.png)
 
 ## Instructions
 
