@@ -28,5 +28,5 @@ class Settlement(db.Model):
     totalbalance = db.Column(db.String())
 
     
-    def __repr__(self):
-        return f"<Track {self.settlement_title}>"
+    # def __repr__(self):
+    #     return f"<Track {self.settlement_title}>"

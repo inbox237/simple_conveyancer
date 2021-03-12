@@ -72,8 +72,8 @@ Clone stuff...
 ssh -i ~/.ssh/vpc.pem ubuntu@3.106.129.206
 
 git clone https://github.com/inbox237/Simple_Conveyancer
-
-cd t3a3
+cd Simple_Conveyancer
+sudo apt-get install python3-venv
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
