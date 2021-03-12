@@ -7,7 +7,6 @@ class Settlement(db.Model):
     __tablename__ = "settlements"
     
     id = db.Column(db.Integer, primary_key=True)
-    settlement_title = db.Column(db.String())
     #settlement_s_tracks_count = db.Column(db.Integer())
     #settlement_s_users_count = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)

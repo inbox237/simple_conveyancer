@@ -22,8 +22,7 @@ def drop_db():
 def seed_db():
     from models.User import User
     from models.Settlement import Settlement
-   
-   
+     
     from main import bcrypt
     from faker import Faker
     import random
@@ -33,46 +32,27 @@ def seed_db():
 #Initial Setup
     users = []
 
-    usr_pla_association_pairs = []
-
-    count_pla_usr = [0]*10
-    count_usr_pla = [0]*10
-
-
     #Users/Settlements
-    for i in range(1,11):
+    for i in range(1,5):
         user = User()
         settlement = Settlement()
-        user.username = f"testusername{i}"
-        user.password = bcrypt.generate_password_hash("123456").decode("utf-8")
 
-    
+        user.username = f"testusername{i}"
+        user.password = bcrypt.generate_password_hash("1234").decode("utf-8")
+
+        settlement.user_id = faker.random_int(min=1, max=4)
+        settlement.name = f"testsettlementname{i}"
+        settlement.saleprice = faker.random_int(min=300000, max=1000000)
+        settlement.deposit = faker.random_int(min=15000, max=20000)
+        settlement.settdate = "2021-06-06"
+
+
+        print(f"{i} Users & Settlements Created")
         db.session.add(user)
         db.session.add(settlement)
         users.append(user)
 
     db.session.commit()
-
-
-#FINAL COUNTS
-
-    #Count User's settlements
-    print(f'usr_count: {count_usr_pla}')
-    for i,val in enumerate(count_usr_pla):
-        print(f'ind: {i} val: {val}')
-        user = db.session.query(User).filter(User.id==i+1).one()
-        user.user_s_settlements_count = val
-        db.session.commit()
-
-    #Count Settlement's Users
-    print(f'pla_count: {count_pla_usr}')
-    for i,val in enumerate(count_pla_usr):
-        print(f'ind: {i} val: {val}')
-        settlement = db.session.query(Settlement).filter(Settlement.id==i+1).one()
-        settlement.settlement_s_users_count = val
-        db.session.commit()
-
-
 
     print("Tables seeded")
 
