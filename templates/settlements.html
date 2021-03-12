@@ -17,26 +17,30 @@
     <h6>Client Name: {{settlement.name}}</h6>
     <h6>Settlement Date: {{settlement.settdate}}</h6>
     <h6>_</h6>
-
+    <h6><b>BCC Rates</b></h6>
+    <h6>The current rates period is from 1 July 2020 to 30 June 2021.</h6>
+    <h6>Total Brisbane City Council Rates: $ {{settlement.ratesamount}}</h6>
+    <h6>_</h6>
+    <h6><b>Days and period adjustment</b></h6>
+    <h6>Rates Paid days Remaining in Period (Paid): {{settlement.ratesdayspaid}}</h6>
+    <h6>Unpaid days from period start (Unpaid): {{settlement.ratesdaysunpaid}}</h6>
+    <h6>_</h6>
 
     <h6>Sale Price: $ {{settlement.saleprice}}</h6>
     <h6>LESS Deposit: $ {{settlement.deposit}}</h6>
     <h6><u>Subtotal: $ {{settlement.balance}}</u></h6>
     <h6>_</h6>
-
-    <h6><b>BCC Rates</b></h6>
-    <h6>The current rates period is from 1 July 2020 to 30 June 2021.</h6>
-    <h6>_</h6>
-    <h6>Total Brisbane City Council Rates: $ {{settlement.ratesamount}}</h6>
-    <h6>Days Remaining in Period: {{settlement.ratesdayspaid}}</h6>
     <h6>PLUS Rates Amount Overpaid: $ {{settlement.ratesoverpaid}}</h6>
-    <h6>MINUS Rates Amount Underpaid: $ {{settlement.ratesoverpaid}}</h6>
+    <h6>MINUS Rates Amount Underpaid: $ {{settlement.ratesunderpaid}}</h6>
     <h6>________</h6>
     <h6><b><u>TOTAL to be received at Settlement: $ {{settlement.totalbalance}}</u></b></h6>
     <h6>________</h6>
 
-    </div>
 
+    </div>
+    <a href="/settlements"><button>Go Back</button></a>
+    <a href="{{ url_for('settlements.modify_settlement', id=settlement.id) }}"><button>Update Settlement</button></a>
+    <a href="{{ url_for('settlements.settlement_delete', id=settlement.id) }}"><button>Delete Settlement</button></a>
     {% endif%}
-    <a href="/settlements">Back</a>
+    
 {% endblock %}

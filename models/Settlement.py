@@ -20,13 +20,13 @@ class Settlement(db.Model):
     ratesamount = db.Column(db.String())
     ratesstatus = db.Column(db.String())
     
-    balance = db.Column(db.Float())
+    balance = db.Column(db.String())
     ratesdayspaid = db.Column(db.Integer())
     ratesdaysunpaid = db.Column(db.Integer())
-    ratesoverpaid = db.Column(db.Float())
-    ratesunderpaid = db.Column(db.Float())
+    ratesoverpaid = db.Column(db.String())
+    ratesunderpaid = db.Column(db.String())
 
-    totalbalance = db.Column(db.Float())
+    totalbalance = db.Column(db.String())
 
     
     def __repr__(self):

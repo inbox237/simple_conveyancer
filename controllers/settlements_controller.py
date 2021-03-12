@@ -34,21 +34,14 @@ def settlement_create():
     
     # Create a new settlement
     name = request.form.get("name")
-
     settdate = datetime.datetime.date(datetime.datetime.strptime(request.form.get("settdate"),'%Y-%m-%d'))
-
     address = request.form.get("address")
-
     saleprice = float(request.form.get("saleprice"))
     deposit = float(request.form.get("deposit"))
     ratesamount = float(request.form.get("ratesamount"))
     ratesstatus = request.form.get("ratesstatus")
 
-    
-
     #create a new Settlement object, with the data received in the request
-
-    
     new_settlement = Settlement()
     new_settlement.name = name
     new_settlement.settdate = settdate
@@ -56,9 +49,9 @@ def settlement_create():
     new_settlement.address = address
     new_settlement.user_id = current_user.id
 
-    new_settlement.saleprice = saleprice
-    new_settlement.deposit = deposit
-    new_settlement.ratesamount = ratesamount
+    new_settlement.saleprice = "{:.2f}".format(saleprice)
+    new_settlement.deposit = "{:.2f}".format(deposit)
+    new_settlement.ratesamount = "{:.2f}".format(ratesamount)
     new_settlement.ratesstatus = ratesstatus
 
     #calculations for fields
@@ -68,8 +61,6 @@ def settlement_create():
     endrates = datetime.date(2021,6,30)
     ratesdaystotal = endrates-startrates
 
-    #sd = datetime.date(datetime.datetime.strptime(settdate, '%Y,%m,%d'))
-    
     ratesdayspaid = endrates-settdate
     ratesdaysunpaid = settdate-startrates
 
@@ -80,37 +71,38 @@ def settlement_create():
     ratesdaystotalfloat = float(ratesdaystotal.days)
 
     ratesoverpaidrate = (ratespaidfloat / ratesdaystotalfloat)
-    ratesoverpaid = (ratesoverpaidrate * ratesamount)
-
-    totalbalance = (balance+ratesoverpaid)
-
     ratesunderpaidrate = (ratesdaysunpaid.days / ratesdaystotal.days)
+    
+    ratesoverpaid = (ratesoverpaidrate * ratesamount)
     ratesunderpaid = (ratesunderpaidrate * ratesamount)
 
-    totalbalanceunpaid = (balance - ratesunderpaid)
     
 
 
     #Calculated fields from above
-    new_settlement.ratesoverpaid = saleprice
-    new_settlement.ratesunderpaid = ratesunderpaid
+    if ratesstatus == "on":
+        new_settlement.ratesoverpaid = "{:.2f}".format(ratesoverpaid)
+        new_settlement.ratesdayspaid = rdp
+        new_settlement.ratesunderpaid = "{:.2f}".format(0)
+        new_settlement.ratesdaysunpaid = 0
+        totalbalance = (balance+ratesoverpaid)
 
-    new_settlement.balance = balance
+    else:
+        new_settlement.ratesunderpaid = "{:.2f}".format(ratesunderpaid)
+        new_settlement.ratesdaysunpaid = rdu
+        new_settlement.ratesoverpaid = "{:.2f}".format(0)
+        new_settlement.ratesdayspaid = 0
+        totalbalance = (balance-ratesunderpaid)
 
-    new_settlement.ratesdayspaid = rdp
-    new_settlement.ratesdaysunderpaid = rdu
-
-    new_settlement.totalbalance = saleprice
-
-
-
-
+    
+    new_settlement.balance = "{:.2f}".format(balance)
+    new_settlement.totalbalance = "{:.2f}".format(totalbalance)
 
     #add a new Settlement to the db
     db.session.add(new_settlement)
     db.session.commit()
 
-    #return jsonify(shelter_schema.dump(new_settlement))
+    #return jsonify(settlement_schema.dump(new_settlement))
     return redirect(url_for('settlements.settlement_index'))
 
 
@@ -124,27 +116,84 @@ def settlement_show(id):
     #return jsonify(settlement_schema.dump(settlement))
     return render_template("settlements.html", settlement = settlement )
 
-@settlements.route("/<int:id>", methods=["PUT", "PATCH"])
-#@jwt_required
+
+
+@settlements.route("/update/<int:id>", methods=["POST"])
+@login_required
 def settlement_update(id):
-    #Update a settlement
-    settlement_fields = settlement_schema.load(request.json)
+    #make sure the selected settlement is owned by the logged in user
+    settlement = Settlement.query.filter_by(id=id, user_id=current_user.id).first()
+    if not settlement:
+        return abort(400, description="Not authorized to delete other people's settlements")
+
+    # Create a new settlement
+    print("hello")
+    name = request.form.get("name")
+    settdate = datetime.datetime.date(datetime.datetime.strptime(request.form.get("settdate"),'%Y-%m-%d'))
+    address = request.form.get("address")
+    saleprice = float(request.form.get("saleprice"))
+    deposit = float(request.form.get("deposit"))
+    ratesamount = float(request.form.get("ratesamount"))
+    ratesstatus = request.form.get("ratesstatus")
+
+    #create a new Settlement object, with the data received in the request
+    new_settlement = Settlement()
+    new_settlement.name = name
+    new_settlement.settdate = settdate
     
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)    
+    new_settlement.address = address
+    new_settlement.user_id = current_user.id
 
-    if not user:
-        return abort(401, description="Invalid user")
+    new_settlement.saleprice = "{:.2f}".format(saleprice)
+    new_settlement.deposit = "{:.2f}".format(deposit)
+    new_settlement.ratesamount = "{:.2f}".format(ratesamount)
+    new_settlement.ratesstatus = ratesstatus
 
-    settlements = Settlement.query.filter_by(id=id)
+    #calculations for fields
+    balance = float((request.form.get("saleprice")))-float((request.form.get("deposit")))
     
-    if settlements.count() != 1:
-        return abort(401, description="Unauthorized to update this book")
+    startrates = datetime.date(2020,7,1)
+    endrates = datetime.date(2021,6,30)
+    ratesdaystotal = endrates-startrates
 
-    settlements.update(settlement_fields)
+    ratesdayspaid = endrates-settdate
+    ratesdaysunpaid = settdate-startrates
+
+    rdp = ratesdayspaid.days
+    rdu = ratesdaysunpaid.days
+
+    ratespaidfloat = float(ratesdayspaid.days)
+    ratesdaystotalfloat = float(ratesdaystotal.days)
+
+    ratesoverpaidrate = (ratespaidfloat / ratesdaystotalfloat)
+    ratesunderpaidrate = (ratesdaysunpaid.days / ratesdaystotal.days)
+    
+    ratesoverpaid = (ratesoverpaidrate * ratesamount)
+    ratesunderpaid = (ratesunderpaidrate * ratesamount)
+
+    #Calculated fields from above
+    if ratesstatus == "on":
+        new_settlement.ratesoverpaid = "{:.2f}".format(ratesoverpaid)
+        new_settlement.ratesdayspaid = rdp
+        new_settlement.ratesunderpaid = "{:.2f}".format(0)
+        new_settlement.ratesdaysunpaid = 0
+        totalbalance = (balance+ratesoverpaid)
+
+    else:
+        new_settlement.ratesunderpaid = "{:.2f}".format(ratesunderpaid)
+        new_settlement.ratesdaysunpaid = rdu
+        new_settlement.ratesoverpaid = "{:.2f}".format(0)
+        new_settlement.ratesdayspaid = 0
+        totalbalance = (balance-ratesunderpaid)
+
+    new_settlement.balance = "{:.2f}".format(balance)
+    new_settlement.totalbalance = "{:.2f}".format(totalbalance)
+
+    #save the changes
     db.session.commit()
+    #return jsonify(settlement_schema.dump(settlements[0]))
+    return redirect(url_for('settlements.settlement_index'))
 
-    return jsonify(settlement_schema.dump(settlements[0]))
 
 @settlements.route("/<int:id>", methods=["DELETE"])
 def settlement_delete(id):
@@ -166,4 +215,7 @@ def settlement_delete(id):
     return jsonify(settlement_schema.dump(settlement))
 
 
-
+@settlements.route("/modify/<int:id>", methods=["GET"])
+def modify_settlement(id):
+    settlement = Settlement.query.get(id)
+    return render_template("modify_settlement.html", settlement=settlement)
