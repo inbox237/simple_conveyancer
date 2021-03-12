@@ -24,6 +24,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/settlements/newsettlement">New Settlement</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+            </li>
           </ul>
 
           {% else %}

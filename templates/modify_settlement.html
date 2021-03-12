@@ -16,31 +16,31 @@
         <div>
             <form action="{{ url_for('settlements.settlement_update', id=settlement.id) }}" method="POST">
                 <div class="row">
-                    <h5>Client Name</h5><input type="text" name="name" placeholder="" autofocus="">
+                    <h5>Client Name</h5><input type="text" name="name" value="{{ settlement.name }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>Settlement Date</h5><input type="date" name="settdate" placeholder="" autofocus="">
+                    <h5>Settlement Date</h5><input type="date" name="settdate" value="{{ settlement.settdate }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>Property Address</h5><input type="text" name="address" placeholder="" autofocus="">
+                    <h5>Property Address</h5><input type="text" name="address" value="{{ settlement.address }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>Sale Price</h5><input type="number" name="saleprice" placeholder="" autofocus="">
+                    <h5>Sale Price</h5><input type="number" name="saleprice" value="{{ settlement.saleprice }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>Deposit</h5><input type="number" name="deposit" placeholder="" autofocus="">
+                    <h5>Deposit</h5><input type="number" name="deposit" value="{{ settlement.deposit }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>BCC Rates Amount</h5><input type="number" name="ratesamount" placeholder="" autofocus="">
+                    <h5>BCC Rates Amount</h5><input type="number" name="ratesamount" value="{{ settlement.ratesamount }}" placeholder="" autofocus="">
                 </div>
 
                 <div class="row">
-                    <h5>Rates Paid y/n?</h5><input type="checkbox" name="ratesstatus" placeholder="" autofocus="">
+                    <h5>Rates Paid y/n?</h5><input type="checkbox" name="ratesstatus" value="{{ settlement.ratesstatus }}" placeholder="" autofocus="">
                 </div>
 
                 <button>Submit Data</button>

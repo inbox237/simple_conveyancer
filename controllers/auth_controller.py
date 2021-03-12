@@ -84,6 +84,7 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+
 @auth.route("/users", methods=["GET"])
 def users_index():
      users = User.query.all()

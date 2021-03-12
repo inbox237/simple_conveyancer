@@ -127,7 +127,6 @@ def settlement_update(id):
         return abort(400, description="Not authorized to delete other people's settlements")
 
     # Create a new settlement
-    print("hello")
     name = request.form.get("name")
     settdate = datetime.datetime.date(datetime.datetime.strptime(request.form.get("settdate"),'%Y-%m-%d'))
     address = request.form.get("address")
@@ -137,7 +136,7 @@ def settlement_update(id):
     ratesstatus = request.form.get("ratesstatus")
 
     #create a new Settlement object, with the data received in the request
-    new_settlement = Settlement()
+    new_settlement = settlement
     new_settlement.name = name
     new_settlement.settdate = settdate
     
@@ -171,6 +170,9 @@ def settlement_update(id):
     ratesoverpaid = (ratesoverpaidrate * ratesamount)
     ratesunderpaid = (ratesunderpaidrate * ratesamount)
 
+    
+
+
     #Calculated fields from above
     if ratesstatus == "on":
         new_settlement.ratesoverpaid = "{:.2f}".format(ratesoverpaid)
@@ -186,33 +188,27 @@ def settlement_update(id):
         new_settlement.ratesdayspaid = 0
         totalbalance = (balance-ratesunderpaid)
 
+    
     new_settlement.balance = "{:.2f}".format(balance)
     new_settlement.totalbalance = "{:.2f}".format(totalbalance)
 
     #save the changes
     db.session.commit()
-    #return jsonify(settlement_schema.dump(settlements[0]))
     return redirect(url_for('settlements.settlement_index'))
 
 
-@settlements.route("/<int:id>", methods=["DELETE"])
+@settlements.route("/delete/<int:id>", methods=["GET"])
+@login_required
 def settlement_delete(id):
-    #Delete a settlement
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-
-    if not user:
-        return abort(401, description="Invalid user")
-
-    settlement = Settlement.query.filter_by(id=id, user_id=user.id).first()
-
+    settlement = Settlement.query.filter_by(id=id, user_id=current_user.id).first()
     if not settlement:
-        return abort(400)
+        return abort(400, description="Not authorized to delete other people's settlements")
 
     db.session.delete(settlement)
     db.session.commit()
+    
+    return redirect(url_for('settlements.settlement_index'))
 
-    return jsonify(settlement_schema.dump(settlement))
 
 
 @settlements.route("/modify/<int:id>", methods=["GET"])
