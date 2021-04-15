@@ -108,7 +108,7 @@ https://inbox237.000webhostapp.com/
 ##### R3 - Application Architecture Diagram:
 ![](docs/ad.png)
 
-#####R4 - User Stories:
+##### R4 - User Stories:
 "As a user, I want to be able to have a reliable portal for which I can log into remotely from any location and calculate the amount of Brisbane City Council Rates due or owed at time of Settlement for my own or my client's upcoming property Settlement."
 
 ###### Persona 1:
@@ -143,7 +143,7 @@ https://inbox237.000webhostapp.com/
 
 
 
-#####R5 - Wireframes:
+##### R5 - Wireframes:
 ![](docs/Login_signup.png)
 
 ![](docs/New_Settlement.png)
@@ -160,7 +160,7 @@ https://inbox237.000webhostapp.com/
 
 ![](docs/Settings_Mobile.png)
 
-#####R6 - Trello Board:
+##### R6 - Trello Board:
 ![](docs/T4A2_trello_1.jpg)
 
 ![](docs/T4A2_trello_2.jpg)
