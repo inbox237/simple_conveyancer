@@ -69,7 +69,7 @@ Note: seeding includes populating these tables:
 
 **ReadMe from Part A:**
 **CCC – Assessment – T4A2 – Conveyancing - Simple Conveyancer (BCC Rates Calculator)
-#### R1 - Description of your website, including:
+### R1 - Description of your website, including:
 ##### Purpose
 ##### Functionality / features
 ##### Target audience
@@ -102,16 +102,16 @@ The application will utilise a PostgreSQL database in conjunction with AWS, Pyth
 https://inbox237.000webhostapp.com/
 
 
-##### R2 - Dataflow Diagram:
+### R2 - Dataflow Diagram:
 ![](docs/dfd.png)
 
-##### R3 - Application Architecture Diagram:
+### R3 - Application Architecture Diagram:
 ![](docs/ad.png)
 
-##### R4 - User Stories:
+### R4 - User Stories:
 "As a user, I want to be able to have a reliable portal for which I can log into remotely from any location and calculate the amount of Brisbane City Council Rates due or owed at time of Settlement for my own or my client's upcoming property Settlement."
 
-###### Persona 1:
+#### Persona 1:
 - Fictional Name: David Justice
 - Photo: Stock Photo
 - Job Title: Conveyancing & Property Lawyer
@@ -125,7 +125,7 @@ https://inbox237.000webhostapp.com/
 -- He spends his time completing numerous property sale and purchase conveyancing transactions for his clients.
 - Environment: David is comfortable using technology generally but needs needs his software to be clear, simple and precise.
 
-###### Persona 2:
+#### Persona 2:
 - Fictional Name: Gladys Numbers
 - Photo: Stock Photo
 - Job Title: Retiree, property investor
@@ -143,7 +143,7 @@ https://inbox237.000webhostapp.com/
 
 
 
-##### R5 - Wireframes:
+### R5 - Wireframes:
 ![](docs/Login_signup.png)
 
 ![](docs/New_Settlement.png)
@@ -160,7 +160,7 @@ https://inbox237.000webhostapp.com/
 
 ![](docs/Settings_Mobile.png)
 
-##### R6 - Trello Board:
+### R6 - Trello Board:
 ![](docs/T4A2_trello_1.jpg)
 
 ![](docs/T4A2_trello_2.jpg)
