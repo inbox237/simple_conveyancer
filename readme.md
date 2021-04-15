@@ -69,11 +69,11 @@ Note: seeding includes populating these tables:
 
 **ReadMe from Part A:**
 **CCC – Assessment – T4A2 – Conveyancing - Simple Conveyancer (BCC Rates Calculator)
-####R1 - Description of your website, including:
-#####- Purpose
-#####- Functionality / features
-#####- Target audience
-#####- Tech stack
+#### R1 - Description of your website, including:
+##### Purpose
+##### Functionality / features
+##### Target audience
+##### Tech stack
 
 The purpose of this application is to create a basic web portal through which a law or conveyancing firm may use their firm username to log in, then be able to use the application to enter their clients’ details regarding an upcoming property sale within the Brisbane City Council area in order to automatically calculate the rates either owing by or owed to the client (sale-side) at time of settlement.
 
