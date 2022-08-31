@@ -161,10 +161,4 @@ https://inbox237.000webhostapp.com/
 ![](docs/Settings_Mobile.png)
 
 ### R6 - Trello Board:
-![](docs/T4A2_trello_1.jpg)
-
-![](docs/T4A2_trello_2.jpg)
-
-![](docs/T4A2_trello_3.jpg)
-
-![](docs/T4A2_trello_4.jpg)
+removed
