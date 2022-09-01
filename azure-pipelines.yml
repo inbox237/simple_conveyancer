@@ -19,10 +19,7 @@ strategy:
     Python37:
       python.version: '3.7'
 
-continueOnError: 
-container:
 steps:
-
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '3.10'
